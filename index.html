@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatakae - Fight!</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#121212">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <span class="greeting" id="user-greeting">HELLO LUCKX2808</span>
+            <button class="menu-icon" id="menu-icon"><i class="fas fa-bars"></i></button>
+        </div>
+        <p class="mood-message" id="mood-message"></p>
+    </header>
+
+    <main>
+        <div class="stats-grid">
+            <div class="card habits-summary">
+                <h2>HABITS</h2>
+                <p><span id="habits-done-count">0</span> of <span id="total-habits-count">0</span></p>
+                <p class="sub-text">Habits done</p>
+            </div>
+            <div class="card streak-card">
+                <span class="streak-label">STREAK</span>
+                <div class="streak-value" id="current-streak">🔥 0</div>
+            </div>
+        </div>
+
+        <section id="days-of-week-section">
+            <div class="days-container" id="days-container">
+                </div>
+        </section>
+
+        <section id="tasks-section" class="card tasks-card">
+            <h2>TASKS <span id="current-view-date" class="current-view-date">(Today)</span></h2>
+            <div id="todo-list">
+                </div>
+        </section>
+
+        <section id="habits-list-section" class="card habits-list-card">
+            <h2>Your Habits</h2>
+            <div id="habit-list">
+                </div>
+        </section>
+        <section id="habit-progress-section" class="card">
+            <h2>Habit Progress (Weekly)</h2>
+            <div id="progress-charts-container">
+                </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tatakae. All rights reserved.</p>
+    </footer>
+
+    <div class="fab-container">
+        <div class="fab-sub-menu">
+            <button class="fab sub-fab" id="add-habit-fab" title="Add Habit">
+                <i class="fas fa-fire"></i>
+            </button>
+            <button class="fab sub-fab" id="add-todo-fab" title="Add To-Do">
+                <i class="fas fa-list-check"></i>
+            </button>
+        </div>
+        <button class="fab main-fab" id="main-fab">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="add-habit-modal" class="modal">
+            <h3>Add New Habit</h3>
+            <input type="text" id="new-habit-name" placeholder="Habit Name (e.g., Read 30 mins)">
+            <label for="habit-frequency">Frequency:</label>
+            <select id="habit-frequency">
+                <option value="daily">Daily</option>
+                <option value="weekly_days">Specific Days of Week</option>
+                <option value="x_times_week">X Times a Week</option>
+            </select>
+
+            <div id="weekly-days-options" class="frequency-options hidden">
+                <label>Select Days:</label>
+                <div class="day-checkboxes">
+                    <input type="checkbox" id="mon" value="mon"><label for="mon">Mon</label>
+                    <input type="checkbox" id="tue" value="tue"><label for="tue">Tue</label>
+                    <input type="checkbox" id="wed" value="wed"><label for="wed">Wed</label>
+                    <input type="checkbox" id="thu" value="thu"><label for="thu">Thu</label>
+                    <input type="checkbox" id="fri" value="fri"><label for="fri">Fri</label>
+                    <input type="checkbox" id="sat" value="sat"><label for="sat">Sat</label>
+                    <input type="checkbox" id="sun" value="sun"><label for="sun">Sun</label>
+                </div>
+            </div>
+
+            <div id="x-times-week-options" class="frequency-options hidden">
+                <label for="habit-goal-count">Goal (times/week):</label>
+                <input type="number" id="habit-goal-count" value="1" min="1">
+            </div>
+
+            <label for="habit-reminder-time">Reminder Time (Optional):</label>
+            <input type="time" id="habit-reminder-time">
+
+            <button id="save-habit-btn">Save Habit</button>
+            <button class="close-modal-btn">Cancel</button>
+        </div>
+
+        <div id="add-todo-modal" class="modal">
+            <h3>Add New To-Do</h3>
+            <input type="text" id="new-todo-text" placeholder="To-Do Item (e.g., Finish report)">
+            <label for="todo-due-date">Due Date (Optional):</label>
+            <input type="date" id="todo-due-date">
+            <label for="todo-priority">Priority:</label>
+            <select id="todo-priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+            </select>
+            <label for="todo-categories">Categories (comma-separated, e.g., Work, Personal):</label>
+            <input type="text" id="todo-categories" placeholder="e.g., Work, Urgent">
+            <button id="save-todo-btn">Save To-Do</button>
+            <button class="close-modal-btn">Cancel</button>
+        </div>
+
+        <div id="username-modal" class="modal">
+            <h3>Change Username</h3>
+            <input type="text" id="username-input" placeholder="Enter your name">
+            <button id="save-username-btn">Save Name</button>
+            <button class="close-modal-btn">Cancel</button>
+        </div>
+    </div>
+
+    <div id="side-menu-overlay" class="side-menu-overlay">
+        <div id="side-menu" class="side-menu">
+            <button class="close-menu-btn" id="close-menu-btn"><i class="fas fa-times"></i></button>
+            <div class="menu-header">
+                <span id="menu-username">HELLO LUCKX2808</span>
+                <p class="menu-greeting">Welcome to Tatakae!</p>
+            </div>
+            <ul class="menu-options">
+                <li><a href="#" id="change-username-option"><i class="fas fa-user-edit"></i> Change Username</a></li>
+                <li><a href="#" id="export-data-option"><i class="fas fa-file-export"></i> Export Data</a></li>
+                <li><label for="import-file" class="import-label"><i class="fas fa-file-import"></i> Import Data<input type="file" id="import-file" accept=".json" style="display:none;"></label></li>
+                <li><a href="#" id="clear-all-data-option" class="danger-option"><i class="fas fa-redo-alt"></i> Clear All Data</a></li>
+                </ul>
+            <div class="menu-footer">
+                <p>Made by Lucky with ❤️</p>
+                <p>&copy; 2025 Tatakae</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Core Application Logic (Integrated JavaScript) ---
+
+        // Local Storage Keys
+        const USERNAME_STORAGE_KEY = 'tatakae_username_v2';
+        const HABITS_STORAGE_KEY = 'tatakae_habits_v4'; // Incremented version
+        const TODO_STORAGE_KEY = 'tatakae_todo_v4';    // Incremented version
+
+        // Elements
+        const userGreetingElement = document.getElementById('user-greeting');
+        const moodMessageElement = document.getElementById('mood-message');
+        const habitList = document.getElementById('habit-list');
+        const habitsDoneCount = document.getElementById('habits-done-count'); // Renamed from tasks-done-count
+        const totalHabitsCount = document.getElementById('total-habits-count');
+        const currentStreakDisplay = document.getElementById('current-streak');
+
+        const todoList = document.getElementById('todo-list');
+        const currentViewDateElement = document.getElementById('current-view-date');
+        const progressChartsContainer = document.getElementById('progress-charts-container'); // New element
+
+        // Modals and FABs
+        const mainFab = document.getElementById('main-fab');
+        const fabSubMenu = document.querySelector('.fab-sub-menu');
+        const addHabitFab = document.getElementById('add-habit-fab');
+        const addTodoFab = document.getElementById('add-todo-fab');
+
+        const newHabitNameInput = document.getElementById('new-habit-name');
+        const habitFrequencySelect = document.getElementById('habit-frequency'); // New
+        const weeklyDaysOptions = document.getElementById('weekly-days-options'); // New
+        const weeklyDayCheckboxes = document.querySelectorAll('#weekly-days-options input[type="checkbox"]'); // New
+        const xTimesWeekOptions = document.getElementById('x-times-week-options'); // New
+        const habitGoalCountInput = document.getElementById('habit-goal-count'); // New
+        const habitReminderTimeInput = document.getElementById('habit-reminder-time'); // New
+        const saveHabitBtn = document.getElementById('save-habit-btn');
+        const addHabitModal = document.getElementById('add-habit-modal');
+
+        const newTodoTextInput = document.getElementById('new-todo-text');
+        const todoDueDateInput = document.getElementById('todo-due-date'); // New
+        const todoPrioritySelect = document.getElementById('todo-priority'); // New
+        const todoCategoriesInput = document.getElementById('todo-categories'); // New
+        const saveTodoBtn = document.getElementById('save-todo-btn');
+        const addTodoModal = document.getElementById('add-todo-modal');
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+
+        const daysContainer = document.getElementById('days-container');
+
+        // Menu Elements
+        const menuIcon = document.getElementById('menu-icon');
+        const sideMenuOverlay = document.getElementById('side-menu-overlay');
+        const sideMenu = document.getElementById('side-menu');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const menuUsernameDisplay = document.getElementById('menu-username');
+
+        const changeUsernameOption = document.getElementById('change-username-option');
+        const usernameModal = document.getElementById('username-modal');
+        const usernameInput = document.getElementById('username-input');
+        const saveUsernameBtn = document.getElementById('save-username-btn');
+
+        const exportDataOption = document.getElementById('export-data-option'); // New
+        const importFile = document.getElementById('import-file'); // New
+        const clearAllDataOption = document.getElementById('clear-all-data-option');
+
+        let habits = [];
+        let todos = [];
+        let fabMenuOpen = false;
+        let viewingDate = new Date();
+        let username = "LUCKX2808"; // Default username
+
+        // --- Utility Functions ---
+
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage(key) {
+            const data = localStorage.getItem(key);
+            try {
+                return data ? JSON.parse(data) : [];
+            } catch (e) {
+                console.error(`Error parsing data from ${key}:`, e);
+                // If data is corrupted, return empty array to prevent app crash
+                return [];
+            }
+        }
+
+        function showModal(modalElement) {
+            modalOverlay.style.display = 'flex';
+            modalElement.style.display = 'block';
+            mainFab.classList.add('active');
+            fabSubMenu.classList.remove('show');
+            fabMenuOpen = false;
+            hideSideMenu();
+        }
+
+        function hideModals() {
+            modalOverlay.style.display = 'none';
+            addHabitModal.style.display = 'none';
+            addTodoModal.style.display = 'none';
+            usernameModal.style.display = 'none';
+            // Clear inputs when modal closes
+            newHabitNameInput.value = '';
+            habitFrequencySelect.value = 'daily';
+            toggleFrequencyOptions(); // Reset visibility
+            weeklyDayCheckboxes.forEach(cb => cb.checked = false);
+            habitGoalCountInput.value = 1;
+            habitReminderTimeInput.value = '';
+
+            newTodoTextInput.value = '';
+            todoDueDateInput.value = '';
+            todoPrioritySelect.value = 'medium';
+            todoCategoriesInput.value = '';
+            usernameInput.value = '';
+        }
+
+        function toggleFabSubMenu() {
+            fabMenuOpen = !fabMenuOpen;
+            fabSubMenu.classList.toggle('show', fabMenuOpen);
+            mainFab.classList.toggle('active', fabMenuOpen);
+            hideSideMenu();
+        }
+
+        function getFullDateString(date) {
+            // Returns YYYY-MM-DD for consistent date comparison and storage
+            const d = new Date(date);
+            const year = d.getFullYear();
+            const month = (d.getMonth() + 1).toString().padStart(2, '0');
+            const day = d.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function getDayNameShort(date) {
+            return date.toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+        }
+
+        function updateMoodMessage() {
+            const hour = new Date().getHours();
+            let message = "Time to get things done!";
+            if (hour >= 0 && hour < 6) {
+                message = "It's late, get some rest 😊";
+            } else if (hour >= 6 && hour < 12) {
+                message = "Good morning, conquer the day! ☀️";
+            } else if (hour >= 12 && hour < 18) {
+                message = "Good afternoon, keep pushing! 💪";
+            } else {
+                message = "Good evening, wrap up strong! ✨";
+            }
+            moodMessageElement.textContent = message;
+        }
+
+        // --- Username Logic ---
+        function loadUsername() {
+            const storedUsername = localStorage.getItem(USERNAME_STORAGE_KEY);
+            if (storedUsername) {
+                username = storedUsername;
+            }
+            updateUsernameDisplay();
+        }
+
+        function updateUsernameDisplay() {
+            userGreetingElement.textContent = `HELLO ${username.toUpperCase()}`;
+            menuUsernameDisplay.textContent = `HELLO ${username.toUpperCase()}`;
+        }
+
+        function changeUsername() {
+            usernameInput.value = username;
+            showModal(usernameModal);
+        }
+
+        function saveUsername() {
+            const newName = usernameInput.value.trim();
+            if (newName) {
+                username = newName;
+                saveToLocalStorage(USERNAME_STORAGE_KEY, username);
+                updateUsernameDisplay();
+                hideModals();
+            } else {
+                alert('Please enter a valid username.');
+            }
+        }
+
+        // --- Side Menu Logic ---
+        function showSideMenu() {
+            sideMenuOverlay.style.display = 'block';
+            sideMenu.classList.add('open');
+            hideModals();
+            fabSubMenu.classList.remove('show');
+            fabMenuOpen = false;
+            mainFab.classList.remove('active');
+        }
+
+        function hideSideMenu() {
+            sideMenu.classList.remove('open');
+            setTimeout(() => {
+                sideMenuOverlay.style.display = 'none';
+            }, 300);
+        }
+
+        function clearAllData() {
+            if (confirm("Are you sure you want to clear ALL your data (habits, tasks, username)? This cannot be undone!")) {
+                localStorage.clear();
+                habits = [];
+                todos = [];
+                username = "LUCKX2808";
+                renderAllContentForDate(new Date());
+                updateUsernameDisplay();
+                hideSideMenu();
+                alert("All data cleared successfully!");
+            }
+        }
+
+        // --- Data Export/Import ---
+        function exportData() {
+            const data = {
+                username: localStorage.getItem(USERNAME_STORAGE_KEY) || "LUCKX2808",
+                habits: habits,
+                todos: todos
+            };
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `tatakae_data_export_${getFullDateString(new Date())}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert("Data exported successfully!");
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (confirm("Are you sure you want to import data? This will REPLACE your current habits, tasks, and username.")) {
+                        if (importedData.username) {
+                            username = importedData.username;
+                            saveToLocalStorage(USERNAME_STORAGE_KEY, username);
+                        }
+                        if (importedData.habits) {
+                            habits = importedData.habits;
+                            saveToLocalStorage(HABITS_STORAGE_KEY, habits);
+                        }
+                        if (importedData.todos) {
+                            todos = importedData.todos;
+                            saveToLocalStorage(TODO_STORAGE_KEY, todos);
+                        }
+                        renderAllContentForDate(new Date());
+                        updateUsernameDisplay();
+                        hideSideMenu();
+                        alert("Data imported successfully!");
+                    }
+                } catch (error) {
+                    alert("Failed to import data. Please ensure it's a valid Tatakae JSON file.");
+                    console.error("Import error:", error);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // Clear the file input
+        }
+
+        // --- Days of the Week Logic ---
+        function renderDaysOfWeek() {
+            daysContainer.innerHTML = '';
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)); // Monday as start of week
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+                const dayNum = date.getDate();
+                const fullDateString = getFullDateString(date);
+
+                const dayItem = document.createElement('div');
+                dayItem.classList.add('day-item');
+                dayItem.dataset.date = fullDateString;
+
+                if (fullDateString === getFullDateString(new Date())) {
+                    dayItem.classList.add('actual-current-day');
+                }
+                if (fullDateString === getFullDateString(viewingDate)) {
+                    dayItem.classList.add('selected-day');
+                }
+
+                let hasActivity = false;
+                // Check if any habit was completed or skipped on this day
+                habits.forEach(habit => {
+                    if (habit.completionLog && (habit.completionLog[fullDateString] || habit.skippedLog && habit.skippedLog[fullDateString])) {
+                        hasActivity = true;
+                    }
+                });
+
+                dayItem.innerHTML = `
+                    <span class="day-num">${dayNum}</span>
+                    <span class="day-name">${dayName}</span>
+                    ${hasActivity ? '<div class="activity-dot"></div>' : ''}
+                `;
+                daysContainer.appendChild(dayItem);
+            }
+            attachDayClickListeners();
+        }
+
+        function attachDayClickListeners() {
+            document.querySelectorAll('.day-item').forEach(dayItem => {
+                dayItem.onclick = (event) => {
+                    const selectedDateString = event.currentTarget.dataset.date;
+                    viewingDate = new Date(selectedDateString);
+                    renderAllContentForDate(viewingDate);
+                    document.querySelectorAll('.day-item').forEach(item => item.classList.remove('selected-day'));
+                    event.currentTarget.classList.add('selected-day');
+                };
+            });
+        }
+
+        // --- Habits Logic ---
+
+        function toggleFrequencyOptions() {
+            const selectedFrequency = habitFrequencySelect.value;
+            weeklyDaysOptions.classList.add('hidden');
+            xTimesWeekOptions.classList.add('hidden');
+
+            if (selectedFrequency === 'weekly_days') {
+                weeklyDaysOptions.classList.remove('hidden');
+            } else if (selectedFrequency === 'x_times_week') {
+                xTimesWeekOptions.classList.remove('hidden');
+            }
+        }
+
+        function renderHabits() {
+            habitList.innerHTML = '';
+            let habitsCompletedOnViewingDate = 0;
+            const viewingDateString = getFullDateString(viewingDate);
+            const todayString = getFullDateString(new Date());
+            const currentDayName = getDayNameShort(new Date());
+
+            if (habits.length === 0) {
+                habitList.innerHTML = '<p class="empty-state">No habits added yet. Tap + to start!</p>';
+                habitsDoneCount.textContent = 0;
+                totalHabitsCount.textContent = 0;
+                currentStreakDisplay.innerHTML = `🔥 0`;
+                renderHabitProgressCharts(); // Even if empty, clear charts
+                return;
+            }
+
+            habits.forEach((habit, index) => {
+                const completedOnThisDate = habit.completionLog && habit.completionLog[viewingDateString];
+                const skippedOnThisDate = habit.skippedLog && habit.skippedLog[viewingDateString];
+                const isToday = viewingDateString === todayString;
+
+                // Determine if habit is applicable today based on frequency
+                let isApplicableToday = true;
+                if (habit.frequency === 'weekly_days') {
+                    if (!habit.daysOfWeek.includes(currentDayName)) {
+                        isApplicableToday = false;
+                    }
+                }
+
+                if (!isApplicableToday && isToday) {
+                    // If not applicable today, mark as "N/A"
+                    // And don't count towards today's completion goals.
+                    // We still display it, but disable actions.
+                }
+
+                if (completedOnThisDate) {
+                    habitsCompletedOnViewingDate++;
+                }
+
+                const habitItem = document.createElement('div');
+                habitItem.classList.add('habit-item');
+                if (completedOnThisDate) {
+                    habitItem.classList.add('completed');
+                } else if (skippedOnThisDate) {
+                    habitItem.classList.add('skipped');
+                }
+                if (!isApplicableToday && isToday) {
+                    habitItem.classList.add('not-applicable');
+                }
+
+
+                const disableCompletionToggle = !isToday || !isApplicableToday;
+                const disableSkipToggle = !isToday || !isApplicableToday;
+
+                habitItem.innerHTML = `
+                    <span class="habit-name">${habit.name}</span>
+                    <div class="habit-actions">
+                        ${isToday && !isApplicableToday ? `<span class="na-label">N/A Today</span>` : ''}
+                        <button class="complete-habit-btn ${completedOnThisDate ? 'completed' : ''}" data-index="${index}" ${disableCompletionToggle ? 'disabled' : ''} title="${completedOnThisDate ? 'Mark as Incomplete' : 'Mark as Complete'}">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="skip-habit-btn ${skippedOnThisDate ? 'skipped' : ''}" data-index="${index}" ${disableSkipToggle || completedOnThisDate ? 'disabled' : ''} title="${skippedOnThisDate ? 'Unskip' : 'Skip Habit for Today'}">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                        <button class="delete-btn" data-type="habit" data-index="${index}" title="Delete Habit">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+                habitList.appendChild(habitItem);
+            });
+
+            habitsDoneCount.textContent = habitsCompletedOnViewingDate;
+            totalHabitsCount.textContent = habits.length;
+            currentStreakDisplay.innerHTML = `🔥 ${calculateOverallStreak()}`;
+
+            attachItemEventListeners();
+            renderDaysOfWeek();
+            renderHabitProgressCharts();
+        }
+
+        function addHabit(name, frequency, daysOfWeek, goalCount, reminderTime) {
+            const newHabit = {
+                id: Date.now(),
+                name: name,
+                frequency: frequency,
+                daysOfWeek: daysOfWeek, // Array of 'mon', 'tue', etc.
+                goalCount: goalCount,   // For x_times_week
+                reminderTime: reminderTime, // "HH:MM"
+                completionLog: {},      // { "YYYY-MM-DD": true/false }
+                skippedLog: {}          // { "YYYY-MM-DD": "reason" }
+            };
+            habits.push(newHabit);
+            saveToLocalStorage(HABITS_STORAGE_KEY, habits);
+            renderAllContentForDate(new Date());
+            hideModals();
+        }
+
+        function toggleHabitCompletion(index) {
+            const habit = habits[index];
+            const todayString = getFullDateString(new Date());
+            const currentDayName = getDayNameShort(new Date());
+
+            // Check if applicable today based on frequency
+            let isApplicableToday = true;
+            if (habit.frequency === 'weekly_days' && !habit.daysOfWeek.includes(currentDayName)) {
+                isApplicableToday = false;
+            }
+
+            if (!isApplicableToday) {
+                alert("This habit is not scheduled for today.");
+                return;
+            }
+            if (habit.skippedLog && habit.skippedLog[todayString]) {
+                alert("This habit was skipped for today. Please unskip to complete.");
+                return;
+            }
+
+            if (habit.completionLog && habit.completionLog[todayString]) {
+                delete habit.completionLog[todayString];
+            } else {
+                if (!habit.completionLog) {
+                    habit.completionLog = {};
+                }
+                habit.completionLog[todayString] = true;
+            }
+
+            saveToLocalStorage(HABITS_STORAGE_KEY, habits);
+            renderAllContentForDate(viewingDate);
+            if (habit.completionLog && habit.completionLog[todayString]) {
+                triggerFunEffect('habit-completed');
+            }
+        }
+
+        function toggleHabitSkip(index) {
+            const habit = habits[index];
+            const todayString = getFullDateString(new Date());
+            const currentDayName = getDayNameShort(new Date());
+
+            // Check if applicable today based on frequency
+            let isApplicableToday = true;
+            if (habit.frequency === 'weekly_days' && !habit.daysOfWeek.includes(currentDayName)) {
+                isApplicableToday = false;
+            }
+
+            if (!isApplicableToday) {
+                alert("This habit is not scheduled for today, so it cannot be skipped/unskipped.");
+                return;
+            }
+            if (habit.completionLog && habit.completionLog[todayString]) {
+                alert("This habit is already marked complete. Please uncomplete to skip.");
+                return;
+            }
+
+            if (habit.skippedLog && habit.skippedLog[todayString]) {
+                delete habit.skippedLog[todayString]; // Unskip
+            } else {
+                if (!habit.skippedLog) {
+                    habit.skippedLog = {};
+                }
+                // For simplicity, just store true. Could add reason input later.
+                habit.skippedLog[todayString] = true;
+            }
+
+            saveToLocalStorage(HABITS_STORAGE_KEY, habits);
+            renderAllContentForDate(viewingDate);
+        }
+
+
+        function calculateOverallStreak() {
+            let maxOverallStreak = 0;
+            const today = new Date();
+
+            for (let i = 0; i < 365; i++) { // Check up to a year back
+                const checkDate = new Date();
+                checkDate.setDate(today.getDate() - i);
+                const checkDateString = getFullDateString(checkDate);
+                const checkDayName = getDayNameShort(checkDate);
+
+                let foundApplicableAndCompletedOrSkipped = false;
+                let foundApplicableButNotDone = false;
+
+                for (const habit of habits) {
+                    let isApplicable = true;
+                    if (habit.frequency === 'daily') {
+                        // Always applicable
+                    } else if (habit.frequency === 'weekly_days') {
+                        if (!habit.daysOfWeek.includes(checkDayName)) {
+                            isApplicable = false;
+                        }
+                    }
+                    // For x_times_week, streak is calculated differently (weekly goal met)
+                    // For simplicity, x_times_week habits don't contribute to daily streak
+                    // if they aren't part of a daily completion check.
+                    // For now, let's include daily and weekly_days for "overall streak".
+                    if (habit.frequency === 'x_times_week') {
+                        isApplicable = false; // Don't count these for daily streak
+                    }
+
+                    if (isApplicable) {
+                        const completed = habit.completionLog && habit.completionLog[checkDateString];
+                        const skipped = habit.skippedLog && habit.skippedLog[checkDateString];
+
+                        if (completed || skipped) {
+                            foundApplicableAndCompletedOrSkipped = true;
+                        } else {
+                            foundApplicableButNotDone = true;
+                        }
+                    }
+                }
+
+                if (foundApplicableAndCompletedOrSkipped && !foundApplicableButNotDone) {
+                    // All applicable habits for this day were either completed or skipped
+                    maxOverallStreak++;
+                } else if (foundApplicableButNotDone) {
+                    // An applicable habit was neither completed nor skipped
+                    break;
+                } else {
+                    // No applicable habits for this day, or all were non-daily.
+                    // If it's today and nothing applicable, streak is 0 or what it was yesterday.
+                    // If it's a past day with no applicable habits, it doesn't break the streak.
+                    // We need to find the most recent day with an *actionable* habit.
+                    let anyActionableHabitsDefined = habits.some(h => h.frequency === 'daily' || (h.frequency === 'weekly_days' && h.daysOfWeek.includes(checkDayName)));
+                    if (anyActionableHabitsDefined && i > 0) { // If there were habits applicable to this day, and they weren't done, break.
+                         break;
+                    }
+                    if (!anyActionableHabitsDefined && i === 0) { // If today has no actionable habits, don't break streak yet, check yesterday
+                        // Do nothing, continue to check previous days
+                    } else if (i > 0) { // If past day, no actionable habits, means streak continues
+                        maxOverallStreak++;
+                    }
+                }
+            }
+            return maxOverallStreak;
+        }
+
+
+        function deleteItem(type, index) {
+            if (confirm(`Are you sure you want to delete this ${type}?`)) {
+                if (type === 'habit') {
+                    habits.splice(index, 1);
+                    saveToLocalStorage(HABITS_STORAGE_KEY, habits);
+                    renderAllContentForDate(viewingDate);
+                } else if (type === 'todo') {
+                    todos.splice(index, 1);
+                    saveToLocalStorage(TODO_STORAGE_KEY, todos);
+                    renderAllContentForDate(viewingDate);
+                }
+            }
+        }
+
+        // --- To-Do List Logic ---
+
+        function renderTodos() {
+            todoList.innerHTML = '';
+            const viewingDateString = getFullDateString(viewingDate);
+            const isToday = viewingDateString === getFullDateString(new Date());
+
+            const todosForToday = todos.filter(todo => {
+                // If no due date, show always
+                if (!todo.dueDate) return true;
+                // If due date matches viewing date, show
+                return todo.dueDate === viewingDateString;
+            });
+
+            // Sort by priority (High > Medium > Low)
+            todosForToday.sort((a, b) => {
+                const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+                return priorityOrder[b.priority] - priorityOrder[a.priority];
+            });
+
+
+            if (todosForToday.length === 0) {
+                todoList.innerHTML = '<p class="empty-state">Nothing to do for this day. Add some tasks!</p>';
+            }
+
+            todosForToday.forEach((todo, index) => {
+                const originalIndex = todos.indexOf(todo); // Get original index to update `todos` array correctly
+                const todoItem = document.createElement('div');
+                todoItem.classList.add('todo-item');
+                if (todo.completed) {
+                    todoItem.classList.add('completed');
+                }
+
+                const disableCheckbox = !isToday; // Only allow completion for current actual day
+
+                // Display priority and categories
+                const priorityClass = `priority-${todo.priority}`;
+                const categoriesHtml = todo.categories && todo.categories.length > 0
+                    ? `<div class="todo-categories">${todo.categories.map(cat => `<span class="category-tag">${cat}</span>`).join('')}</div>`
+                    : '';
+                const dueDateHtml = todo.dueDate && todo.dueDate !== viewingDateString ? `<span class="todo-due-date">Due: ${new Date(todo.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>` : '';
+
+
+                todoItem.innerHTML = `
+                    <button class="complete-todo-btn" data-index="${originalIndex}" ${disableCheckbox ? 'disabled' : ''}>
+                        <i class="fas ${todo.completed ? 'fa-check-square' : 'fa-square'}"></i>
+                    </button>
+                    <div class="todo-content">
+                        <span class="todo-text ${priorityClass}">${todo.text}</span>
+                        <div class="todo-meta">
+                            ${dueDateHtml}
+                            ${categoriesHtml}
+                        </div>
+                    </div>
+                    <button class="delete-btn" data-type="todo" data-index="${originalIndex}" title="Delete To-Do">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                todoList.appendChild(todoItem);
+            });
+            attachItemEventListeners();
+        }
+
+        function addTodo(text, dueDate, priority, categories) {
+            todos.push({
+                id: Date.now(),
+                text: text,
+                dueDate: dueDate, // YYYY-MM-DD string
+                priority: priority, // 'low', 'medium', 'high'
+                categories: categories.split(',').map(tag => tag.trim()).filter(tag => tag), // Array of strings
+                completed: false
+            });
+            saveToLocalStorage(TODO_STORAGE_KEY, todos);
+            renderAllContentForDate(new Date());
+            hideModals();
+        }
+
+        function toggleTodoCompletion(index) {
+            if (getFullDateString(viewingDate) !== getFullDateString(new Date())) {
+                alert("You can only mark tasks complete/incomplete for today.");
+                return;
+            }
+
+            todos[index].completed = !todos[index].completed;
+            saveToLocalStorage(TODO_STORAGE_KEY, todos);
+            renderAllContentForDate(viewingDate);
+            if (todos[index].completed) {
+                triggerFunEffect('todo-completed');
+            }
+        }
+
+        // --- Habit Progress Visualization (Basic) ---
+        function renderHabitProgressCharts() {
+            progressChartsContainer.innerHTML = '';
+            if (habits.length === 0) {
+                progressChartsContainer.innerHTML = '<p class="empty-state">Add habits to see your progress here!</p>';
+                return;
+            }
+
+            const today = new Date();
+            // Calculate start of current week (Monday)
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - (today.getDay() === 0 ? 6 : today.getDay() - 1)); // Set to Monday
+
+            habits.forEach(habit => {
+                let completionsThisWeek = 0;
+                let goalAchieved = false;
+
+                if (habit.frequency === 'daily' || habit.frequency === 'weekly_days') {
+                    // Count completed days this week
+                    for (let i = 0; i < 7; i++) {
+                        const checkDate = new Date(startOfWeek);
+                        checkDate.setDate(startOfWeek.getDate() + i);
+                        const checkDateString = getFullDateString(checkDate);
+                        const checkDayName = getDayNameShort(checkDate);
+
+                        let isApplicable = true;
+                        if (habit.frequency === 'weekly_days' && !habit.daysOfWeek.includes(checkDayName)) {
+                            isApplicable = false;
+                        }
+
+                        if (isApplicable && habit.completionLog && habit.completionLog[checkDateString]) {
+                            completionsThisWeek++;
+                        }
+                    }
+                    // For daily/weekly_days, goal is implicit (e.g., 7 for daily, or num of selected days)
+                    const potentialCompletions = habit.frequency === 'daily' ? 7 : habit.daysOfWeek.length;
+                    goalAchieved = (completionsThisWeek >= potentialCompletions); // Simple goal: did they complete all applicable?
+                } else if (habit.frequency === 'x_times_week') {
+                    // Calculate completions within the current calendar week (Monday to Sunday)
+                    for (let i = 0; i < 7; i++) {
+                        const checkDate = new Date(startOfWeek);
+                        checkDate.setDate(startOfWeek.getDate() + i);
+                        const checkDateString = getFullDateString(checkDate);
+                        if (habit.completionLog && habit.completionLog[checkDateString]) {
+                            completionsThisWeek++;
+                        }
+                    }
+                    goalAchieved = (completionsThisWeek >= habit.goalCount);
+                }
+
+                const progressItem = document.createElement('div');
+                progressItem.classList.add('progress-item');
+
+                const currentGoalText = habit.frequency === 'x_times_week'
+                    ? ` (${completionsThisWeek}/${habit.goalCount} this week)`
+                    : ` (${completionsThisWeek} completed this week)`;
+
+                progressItem.innerHTML = `
+                    <div class="progress-header">
+                        <span class="progress-habit-name">${habit.name}</span>
+                        <span class="progress-status ${goalAchieved ? 'goal-met' : 'goal-not-met'}">
+                            ${goalAchieved ? 'Goal Met!' : 'On Track'}
+                            ${currentGoalText}
+                        </span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: ${Math.min(100, (completionsThisWeek / (habit.goalCount || 7)) * 100)}%;"></div>
+                    </div>
+                `;
+                progressChartsContainer.appendChild(progressItem);
+            });
+        }
+
+
+        // --- Reminder Notifications (Basic In-Browser) ---
+        function checkAndTriggerReminders() {
+            const now = new Date();
+            const currentTime = now.toTimeString().substring(0, 5); // "HH:MM" format
+            const todayString = getFullDateString(now);
+            const currentDayName = getDayNameShort(now);
+
+            habits.forEach(habit => {
+                if (habit.reminderTime && habit.reminderTime === currentTime) {
+                    // Check if already completed/skipped for today
+                    const completed = habit.completionLog && habit.completionLog[todayString];
+                    const skipped = habit.skippedLog && habit.skippedLog[todayString];
+
+                    if (completed || skipped) {
+                        return; // Already dealt with for today
+                    }
+
+                    // Check if habit is applicable today
+                    let isApplicable = true;
+                    if (habit.frequency === 'weekly_days' && !habit.daysOfWeek.includes(currentDayName)) {
+                        isApplicable = false;
+                    }
+                    // For 'x_times_week', reminders are less straightforward for specific times.
+                    // We'll treat it as daily if a time is set, but this can be refined.
+                    if (habit.frequency === 'x_times_week' && !isApplicable) {
+                         // If x_times_week and not explicitly scheduled on this day, don't remind
+                         return;
+                    }
+
+                    if (isApplicable && !completed && !skipped) {
+                        // Basic browser alert for notification (since no PWA push)
+                        alert(`⏰ Reminder: It's time for "${habit.name}"!`);
+                        console.log(`Reminder fired for "${habit.name}"`);
+                        // To prevent repeated alerts within the same minute, you could
+                        // temporarily mark it as "reminded" in localStorage for the current minute.
+                    }
+                }
+            });
+        }
+
+        // --- Fun Tweak: Dynamic Effects ---
+        function triggerFunEffect(type) {
+            const body = document.body;
+            if (type === 'habit-completed') {
+                for (let i = 0; i < 15; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    const colors = ['#FF6B6B', '#6A7AFE', '#4CAF50', '#FFD700', '#f0f0f0'];
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.top = `${Math.random() * 100}%`;
+                    body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 1000);
+                }
+            } else if (type === 'todo-completed') {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const randomX = Math.random() * window.innerWidth;
+                const randomY = Math.random() * window.innerHeight;
+                sparkle.style.setProperty('--sparkle-x', `${randomX}px`);
+                sparkle.style.setProperty('--sparkle-y', `${randomY}px`);
+                body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 700);
+            }
+        }
+
+        // --- Event Listeners Attachment (Centralized) ---
+        function attachItemEventListeners() {
+            document.querySelectorAll('.complete-habit-btn').forEach(button => {
+                button.onclick = (event) => {
+                    const index = event.currentTarget.dataset.index;
+                    toggleHabitCompletion(index);
+                };
+            });
+            document.querySelectorAll('.skip-habit-btn').forEach(button => {
+                button.onclick = (event) => {
+                    const index = event.currentTarget.dataset.index;
+                    toggleHabitSkip(index);
+                };
+            });
+            document.querySelectorAll('.complete-todo-btn').forEach(button => {
+                button.onclick = (event) => {
+                    const index = event.currentTarget.dataset.index;
+                    toggleTodoCompletion(index);
+                };
+            });
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.onclick = (event) => {
+                    const type = event.currentTarget.dataset.type;
+                    const index = event.currentTarget.dataset.index;
+                    deleteItem(type, index);
+                };
+            });
+        }
+
+        // --- Event Listeners for FABs, Modals, and Menu ---
+        mainFab.onclick = toggleFabSubMenu;
+
+        addHabitFab.onclick = () => {
+            showModal(addHabitModal);
+            toggleFabSubMenu();
+        };
+        addTodoFab.onclick = () => {
+            showModal(addTodoModal);
+            toggleFabSubMenu();
+        };
+
+        // Habit modal frequency change listener
+        habitFrequencySelect.onchange = toggleFrequencyOptions;
+
+        saveHabitBtn.onclick = () => {
+            const habitName = newHabitNameInput.value.trim();
+            if (!habitName) {
+                alert('Please enter a habit name.');
+                return;
+            }
+
+            const frequency = habitFrequencySelect.value;
+            let daysOfWeek = [];
+            let goalCount = 1;
+            const reminderTime = habitReminderTimeInput.value || null;
+
+            if (frequency === 'weekly_days') {
+                weeklyDayCheckboxes.forEach(cb => {
+                    if (cb.checked) {
+                        daysOfWeek.push(cb.value);
+                    }
+                });
+                if (daysOfWeek.length === 0) {
+                    alert('Please select at least one day for weekly habits.');
+                    return;
+                }
+            } else if (frequency === 'x_times_week') {
+                goalCount = parseInt(habitGoalCountInput.value, 10);
+                if (isNaN(goalCount) || goalCount < 1) {
+                    alert('Please enter a valid goal (number of times per week).');
+                    return;
+                }
+            }
+
+            addHabit(habitName, frequency, daysOfWeek, goalCount, reminderTime);
+        };
+
+        saveTodoBtn.onclick = () => {
+            const todoText = newTodoTextInput.value.trim();
+            if (!todoText) {
+                alert('Please enter a to-do item.');
+                return;
+            }
+
+            const dueDate = todoDueDateInput.value || null; // Will be YYYY-MM-DD or null
+            const priority = todoPrioritySelect.value;
+            const categories = todoCategoriesInput.value;
+
+            addTodo(todoText, dueDate, priority, categories);
+        };
+
+        closeModalBtns.forEach(button => {
+            button.onclick = hideModals;
+        });
+
+        modalOverlay.onclick = (event) => {
+            if (event.target === modalOverlay) {
+                hideModals();
+            }
+        };
+
+        // Menu Event Listeners
+        menuIcon.onclick = showSideMenu;
+        closeMenuBtn.onclick = hideSideMenu;
+        sideMenuOverlay.onclick = (event) => {
+            if (event.target === sideMenuOverlay) {
+                hideSideMenu();
+            }
+        };
+
+        changeUsernameOption.onclick = (e) => {
+            e.preventDefault();
+            changeUsername();
+        };
+        saveUsernameBtn.onclick = saveUsername;
+
+        exportDataOption.onclick = (e) => {
+            e.preventDefault();
+            exportData();
+        };
+        importFile.onchange = importData;
+
+        clearAllDataOption.onclick = (e) => {
+            e.preventDefault();
+            clearAllData();
+        };
+
+        // --- Master Render Function ---
+        function renderAllContentForDate(dateToRender) {
+            viewingDate = dateToRender;
+
+            const todayString = getFullDateString(new Date());
+            const viewingDateString = getFullDateString(viewingDate);
+
+            if (viewingDateString === todayString) {
+                currentViewDateElement.textContent = "(Today)";
+            } else {
+                currentViewDateElement.textContent = `(${new Date(viewingDateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})`;
+            }
+
+            renderHabits();
+            renderTodos();
+            renderDaysOfWeek();
+            renderHabitProgressCharts(); // Ensure charts update on date change
+        }
+
+
+        // --- Initialize App ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsername();
+            habits = loadFromLocalStorage(HABITS_STORAGE_KEY);
+            todos = loadFromLocalStorage(TODO_STORAGE_KEY);
+            updateMoodMessage();
+            renderAllContentForDate(new Date());
+            setInterval(updateMoodMessage, 1000 * 60 * 5); // Update mood message every 5 minutes
+
+            // Set up a timer to check for reminders every minute
+            setInterval(checkAndTriggerReminders, 1000 * 60); // Every minute
+            // Run check immediately on load too
+            checkAndTriggerReminders();
+        });
+
+        // This interval checks if the "today" date has changed (e.g., crossing midnight)
+        // and re-renders the current view to reflect new day's status.
+        setInterval(() => {
+            const today = new Date();
+            // Check if current viewing date is not the actual today
+            if (getFullDateString(viewingDate) !== getFullDateString(today)) {
+                // If the user is viewing a past/future day, we don't force a jump to today.
+                // But we still need to update elements that depend on *actual* today's date (like streak).
+                // So, we re-render, but keep `viewingDate` as is, unless it *was* today and now it's a new day.
+                if (getFullDateString(viewingDate) === getFullDateString(new Date(new Date().setDate(new Date().getDate() - 1)))) {
+                    // If viewing was yesterday and now it's today, jump to today.
+                    renderAllContentForDate(today);
+                } else {
+                    // Otherwise, just re-render to update today's stats/applicability, but keep the selected date.
+                    renderHabits(); // Recalculates based on today
+                    renderTodos(); // Recalculates based on today
+                    renderDaysOfWeek(); // Updates actual-current-day highlight
+                    renderHabitProgressCharts(); // Updates based on today
+                }
+            }
+        }, 1000 * 60 * 60); // Check every hour for date change
+    </script>
+</body>
+</html>

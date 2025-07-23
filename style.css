@@ -1,0 +1,991 @@
+/* General Body Styles - Dark Theme */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevent horizontal scroll due to menu */
+}
+
+header {
+    background-color: #1a1a1a;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.greeting {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.menu-icon {
+    background: none;
+    border: none;
+    color: #f0f0f0;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.menu-icon:hover {
+    background-color: #333;
+}
+
+.mood-message {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #bbb;
+    opacity: 0.8;
+}
+
+main {
+    flex-grow: 1;
+    padding: 1rem;
+    max-width: 600px;
+    margin: 1rem auto;
+    width: 100%;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card {
+    background-color: #2a2a2a;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid #3a3a3a;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.habits-summary h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.habits-summary p {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.5rem 0 0.2rem;
+    color: #fff;
+}
+
+.habits-summary .sub-text {
+    font-size: 0.85rem;
+    color: #bbb;
+}
+
+.streak-card {
+    background-color: #FFD700;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.streak-card .streak-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.streak-value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1;
+    margin-top: 0.5rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Days of the Week */
+#days-of-week-section {
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0;
+}
+
+.days-container {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 8px;
+}
+
+.days-container::-webkit-scrollbar {
+    display: none;
+}
+
+.day-item {
+    flex: 0 0 calc(100% / 7 - 8px);
+    min-width: 60px;
+    height: 90px;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #3a3a3a;
+    transition: background-color 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.day-item.actual-current-day {
+    border: 2px solid #FF6B6B;
+}
+
+.day-item.selected-day {
+    background-color: #FF6B6B;
+    border-color: #FF6B6B;
+    color: white;
+    transform: translateY(-5px);
+}
+
+.day-item .day-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.day-item .day-name {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.activity-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+
+/* TASKS Section */
+.tasks-card {
+    margin-bottom: 1.5rem;
+}
+
+.tasks-card h2, .habits-list-card h2, #habit-progress-section h2 {
+    display: flex;
+    align-items: center;
+    color: #FF6B6B;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.current-view-date {
+    font-size: 0.9rem;
+    color: #bbb;
+    margin-left: 10px;
+    font-weight: 400;
+}
+
+/* To-Do List (TASKS) Items */
+.todo-item {
+    display: flex;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #333;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    background-color: #222;
+}
+
+.todo-item.completed {
+    opacity: 0.7;
+    background-color: #1c1c1c;
+    border-color: #4CAF50;
+}
+
+.todo-item .todo-content {
+    flex-grow: 1;
+    margin-left: 0.8rem;
+}
+
+.todo-item .todo-text {
+    font-size: 1rem;
+    color: #f0f0f0;
+    display: block; /* Make sure it takes full width */
+    margin-bottom: 0.2rem;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.todo-item .todo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+.todo-item .todo-due-date {
+    font-weight: 600;
+    color: #FFD700;
+}
+.todo-item .category-tag {
+    background-color: #333;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    color: #bbb;
+}
+
+
+/* Priority indicators */
+.todo-text.priority-high { color: #f44336; }
+.todo-text.priority-medium { color: #FFD700; }
+.todo-text.priority-low { color: #4CAF50; }
+
+
+.complete-todo-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #FF6B6B;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-item.completed .complete-todo-btn {
+    color: #4CAF50;
+}
+.complete-todo-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: #777;
+}
+
+
+/* Habits List (Detailed) */
+.habits-list-card {
+    margin-top: 2rem;
+}
+
+.habit-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a1a1a;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #333;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.habit-item:hover {
+    transform: translateY(-2px);
+    background-color: #222;
+}
+
+.habit-item.completed {
+    opacity: 0.7;
+    background-color: #1c1c1c;
+    border-color: #4CAF50;
+}
+.habit-item.skipped {
+    opacity: 0.7;
+    background-color: #1c1c1c;
+    border-color: #6A7AFE; /* Skipped color */
+}
+.habit-item.not-applicable {
+    opacity: 0.5;
+    background-color: #1c1c1c;
+    border-color: #555;
+    font-style: italic;
+}
+
+
+.habit-item .habit-name {
+    flex-grow: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+.habit-item.completed .habit-name,
+.habit-item.skipped .habit-name,
+.habit-item.not-applicable .habit-name {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.habit-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.complete-habit-btn, .skip-habit-btn {
+    background: none;
+    border: 2px solid;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.complete-habit-btn {
+    border-color: #FF6B6B;
+    color: #FF6B6B;
+}
+
+.complete-habit-btn.completed {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: white;
+}
+
+.complete-habit-btn:hover:not(.completed) {
+    background-color: rgba(255, 107, 107, 0.1);
+}
+.complete-habit-btn.completed:hover {
+    background-color: #449d47;
+}
+
+.skip-habit-btn {
+    border-color: #6A7AFE;
+    color: #6A7AFE;
+}
+.skip-habit-btn.skipped {
+    background-color: #6A7AFE;
+    border-color: #6A7AFE;
+    color: white;
+}
+.skip-habit-btn:hover:not(.skipped) {
+    background-color: rgba(106, 122, 254, 0.1);
+}
+.skip-habit-btn.skipped:hover {
+    background-color: #5566ee;
+}
+
+.complete-habit-btn:disabled, .skip-habit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #777;
+    color: #777;
+    background: none;
+}
+
+.na-label {
+    font-size: 0.75rem;
+    color: #999;
+    margin-right: 5px;
+    font-style: italic;
+}
+
+/* General Buttons (for modals and delete) */
+button {
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #e55a5a;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #f44336;
+    font-size: 1.1rem;
+    padding: 0.4rem;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    box-shadow: none;
+}
+
+.delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    transform: none;
+}
+
+/* Input Fields */
+input[type="text"], input[type="date"], input[type="time"], input[type="number"], select {
+    width: calc(100% - 20px);
+    padding: 0.6rem 10px;
+    margin-bottom: 0.8rem;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    background-color: #3a3a3a;
+    color: #f0f0f0;
+}
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.4rem;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+
+input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: #FF6B6B;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+/* Habit Frequency Options in Modal */
+.frequency-options {
+    background-color: #3a3a3a;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+}
+.day-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.day-checkboxes input[type="checkbox"] {
+    display: none; /* Hide default checkbox */
+}
+.day-checkboxes label {
+    display: inline-block;
+    background-color: #555;
+    color: #f0f0f0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+    border: 1px solid #666;
+    margin: 0; /* Override default label margin */
+    width: auto; /* Ensure labels resize to content */
+}
+.day-checkboxes input[type="checkbox"]:checked + label {
+    background-color: #6A7AFE;
+    border-color: #6A7AFE;
+    color: white;
+}
+.day-checkboxes label:hover {
+    background-color: #666;
+}
+.hidden {
+    display: none !important;
+}
+
+
+.empty-state {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+}
+
+/* Modals */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none;
+}
+
+.modal {
+    background-color: #2a2a2a;
+    padding: 1.8rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    position: relative;
+    display: none;
+    border: 1px solid #444;
+}
+
+.modal h3 {
+    margin-top: 0;
+    color: #FF6B6B;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.modal button {
+    margin: 0.4rem;
+}
+
+.modal .close-modal-btn {
+    background-color: #555;
+    color: white;
+}
+.modal .close-modal-btn:hover {
+    background-color: #666;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 0.8rem;
+    color: #777;
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+/* Floating Action Buttons (FAB) */
+.fab-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 900;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.fab {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    color: white;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.main-fab {
+    background-color: #FF6B6B;
+    z-index: 901;
+}
+
+.main-fab.active {
+    transform: rotate(45deg);
+}
+
+.fab-sub-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fab-sub-menu.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.sub-fab {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+    background-color: #6A7AFE;
+}
+
+.sub-fab:hover {
+    background-color: #5566ee;
+}
+
+/* Fun Tweaks - Animations & Effects */
+@keyframes confetti-fall {
+    0% { transform: translate(-50%, -50%) rotate(0deg) scale(0); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translate(-50%, 150%) rotate(720deg) scale(1.5); opacity: 0; }
+}
+
+.confetti {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: var(--confetti-color, #ffeb3b);
+    border-radius: 50%;
+    opacity: 0;
+    animation: confetti-fall 1s forwards ease-out;
+    pointer-events: none;
+    z-index: 1001;
+}
+
+@keyframes sparkle-fade {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.sparkle {
+    position: fixed;
+    top: var(--sparkle-y, 50%);
+    left: var(--sparkle-x, 50%);
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.7);
+    animation: sparkle-fade 0.7s forwards ease-out;
+    pointer-events: none;
+    z-index: 1001;
+}
+
+/* -------------------------------------- */
+/* Side Menu (Drawer) Styles */
+/* -------------------------------------- */
+.side-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: none;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background-color: #1a1a1a;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.4);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    box-sizing: border-box;
+}
+
+.side-menu.open {
+    transform: translateX(0);
+}
+
+.close-menu-btn {
+    background: none;
+    border: none;
+    color: #f0f0f0;
+    font-size: 1.8rem;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    z-index: 1002;
+}
+.close-menu-btn:hover {
+    background-color: #333;
+}
+
+.menu-header {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.menu-header #menu-username {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.menu-header .menu-greeting {
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+.menu-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.menu-options li {
+    margin-bottom: 0.8rem;
+}
+
+.menu-options a, .menu-options .import-label {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer; /* For the label */
+}
+
+.menu-options a:hover, .menu-options .import-label:hover {
+    background-color: #2a2a2a;
+    color: #FF6B6B;
+}
+
+.menu-options a i, .menu-options .import-label i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #FFD700;
+}
+
+.menu-options a.danger-option {
+    color: #f44336;
+}
+.menu-options a.danger-option i {
+    color: #f44336;
+}
+.menu-options a.danger-option:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.menu-footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #777;
+    font-size: 0.8rem;
+}
+
+.menu-footer p {
+    margin: 0.3rem 0;
+}
+
+/* Habit Progress Charts */
+#habit-progress-section {
+    margin-top: 2rem;
+    padding-bottom: 2rem; /* Give space for charts */
+}
+
+.progress-item {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.progress-habit-name {
+    font-weight: 600;
+    color: #f0f0f0;
+    font-size: 1rem;
+}
+
+.progress-status {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.progress-status.goal-met {
+    background-color: #4CAF50;
+    color: white;
+}
+.progress-status.goal-not-met {
+    background-color: #FFD700;
+    color: #333;
+}
+
+.progress-bar-container {
+    background-color: #333;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #6A7AFE; /* Progress color */
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+}
+
+
+/* Media Queries for larger screens */
+@media (min-width: 768px) {
+    .greeting {
+        font-size: 2rem;
+    }
+    .menu-icon {
+        font-size: 1.6rem;
+    }
+    .mood-message {
+        font-size: 1.1rem;
+    }
+    .habits-summary h2, .streak-card .streak-label {
+        font-size: 1.2rem;
+    }
+    .habits-summary p {
+        font-size: 2.5rem;
+    }
+    .streak-value {
+        font-size: 3.5rem;
+    }
+    .day-item {
+        min-width: 70px;
+        height: 100px;
+    }
+    .day-item .day-num {
+        font-size: 2rem;
+    }
+    .day-item .day-name {
+        font-size: 0.9rem;
+    }
+    .tasks-card h2, .habits-list-card h2, #habit-progress-section h2 {
+        font-size: 1.6rem;
+    }
+    .todo-item .todo-text, .habit-item .habit-name {
+        font-size: 1.1rem;
+    }
+    .complete-todo-btn {
+        font-size: 1.5rem;
+        width: 30px;
+        height: 30px;
+    }
+    .complete-habit-btn, .skip-habit-btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+    .delete-btn {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+    }
+    input[type="text"], input[type="date"], input[type="time"], input[type="number"], select {
+        font-size: 1rem;
+        padding: 0.75rem 10px;
+    }
+    .modal {
+        max-width: 400px;
+        padding: 2rem;
+    }
+    .modal h3 {
+        font-size: 1.6rem;
+    }
+    .fab {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    .fab-sub-menu {
+        gap: 10px;
+    }
+    .sub-fab {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    .fab-container {
+        bottom: 20px;
+        right: 20px;
+    }
+    .side-menu {
+        width: 320px;
+    }
+}
